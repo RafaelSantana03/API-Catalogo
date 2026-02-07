@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Metadata.Ecma335;
 namespace APICatalogo.Models;
 
-[Table("Categoria")]
+[Table("categorias")]
 public class Categoria
 {
     public Categoria()

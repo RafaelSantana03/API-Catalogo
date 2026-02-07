@@ -111,3 +111,4 @@ A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\obj\Debug\ne
 A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\obj\Debug\net8.0\APICatalogo.pdb
 A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\obj\Debug\net8.0\APICatalogo.genruntimeconfig.cache
 A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\obj\Debug\net8.0\ref\APICatalogo.dll
+A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
