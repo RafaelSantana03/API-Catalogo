@@ -16,6 +16,17 @@ namespace APICatalogo.Controllers
             _context = context;
         }
 
+        [HttpGet("Primeiro")]
+        public ActionResult<Produto>GetPrimeiro()
+        {
+            var produtos = _context.Produtos.ToList();
+            if (produtos is null)
+            {
+                return NotFound();
+            }
+            return Ok(produtos);
+        }
+
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> Get()
         {
