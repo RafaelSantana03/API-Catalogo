@@ -19,6 +19,7 @@ namespace APICatalogo.Controllers
         [HttpGet("Primeiro")]
         public ActionResult<Produto>GetPrimeiro()
         {
+
             var produtos = _context.Produtos.AsNoTracking().FirstOrDefault();
             if (produtos is null)
             {
