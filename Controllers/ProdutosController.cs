@@ -25,7 +25,7 @@ namespace APICatalogo.Controllers
             var teste = valor;
             return _context.Produtos.AsNoTracking().FirstOrDefault();
         }
-        public ActionResult<Produto>GetPrimeiro()
+        public ActionResult<Produto> GetPrimeiro()
         {
 
             var produtos = _context.Produtos.AsNoTracking().FirstOrDefault();
@@ -101,5 +101,50 @@ namespace APICatalogo.Controllers
 
             return Ok(produto);
         }
+        //tipos de retorno 
+        [HttpGet("tipos-retorno")]
+        public ActionResult TiposRetorno()
+        {
+            return Ok(new
+            {
+                Retorno = "Tipos de retorno",
+                Tipo1 = "IActionResult",
+                Tipo2 = "ActionResult",
+                Tipo3 = "ActionResult<T>"
+            });
+        }
+        public ActionResult<Produto> GetProduto()
+        {
+            var produto = _context.Produtos.AsNoTracking().FirstOrDefault();
+            if (produto is null)
+            {
+                return NotFound();
+            }
+            return produto;
+        }
+        //[HttpGet("tipos-retorno")]
+        //public ActionResult TiposRetorno() //ActionResult
+        //{
+        //    return Ok(new
+        //    {
+        //        Retorno = "Tipos de retorno",
+        //        Tipo1 = "IActionResult",
+        //        Tipo2 = "ActionResult",
+        //        Tipo3 = "ActionResult<T>"
+        //    });
+        //}
+        //public ActionResult<Produto> GetProduto() //ActionResult<T>
+        //{
+        //    var produto = _context.Produtos.AsNoTracking().FirstOrDefault();
+        //    if (produto is null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return produto;
+        //}
+        //IActionResult
+
+
+
     }
 }
