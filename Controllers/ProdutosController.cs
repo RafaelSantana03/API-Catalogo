@@ -17,9 +17,14 @@ namespace APICatalogo.Controllers
             _context = context;
         }
         // /api/produtos/primeiro
-        [HttpGet("Primeiro")]
-        [HttpGet("/primeiro")]
-        [HttpGet("teste")]
+        //[HttpGet("Primeiro")]
+        //[HttpGet("/primeiro")]
+        [HttpGet("{valor:aplha:length(5)}")]
+        public ActionResult<Produto> Get2(string valor)
+        {
+            var teste = valor;
+            return _context.Produtos.AsNoTracking().FirstOrDefault();
+        }
         public ActionResult<Produto>GetPrimeiro()
         {
 
