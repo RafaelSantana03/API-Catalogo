@@ -2,6 +2,7 @@
 using APICatalogo.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace APICatalogo.Controllers
 {
@@ -23,7 +24,8 @@ namespace APICatalogo.Controllers
         }
 
         // api/produtos/1
-        public async Task<ActionResult<Produto>> Get(int id)
+        [HttpGet("{id}", Name = "ObterProduto")]
+        public async Task<ActionResult<Produto>> Get([FromQuery]int id)
         {
             var produtos = await _context.Produtos.AsNoTracking()
                 .FirstOrDefaultAsync(p => p.ProdutoId == id);
@@ -99,27 +101,6 @@ namespace APICatalogo.Controllers
             _context.SaveChanges();
 
             return Ok(produto);
-        }
-        //tipos de retorno 
-        [HttpGet("tipos-retorno")]
-        public ActionResult TiposRetorno()
-        {
-            return Ok(new
-            {
-                Retorno = "Tipos de retorno",
-                Tipo1 = "IActionResult",
-                Tipo2 = "ActionResult",
-                Tipo3 = "ActionResult<T>"
-            });
-        }
-        public ActionResult<Produto> GetProduto()
-        {
-            var produto = _context.Produtos.AsNoTracking().FirstOrDefault();
-            if (produto is null)
-            {
-                return NotFound();
-            }
-            return produto;
         }
     }
 }
