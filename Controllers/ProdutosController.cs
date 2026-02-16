@@ -3,10 +3,11 @@ using APICatalogo.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace APICatalogo.Controllers
 {
-    [Route("[controller]")]
+    [Route("[controller]")] // / Produtos
     [ApiController]
     public class ProdutosController : ControllerBase
     {
@@ -15,8 +16,10 @@ namespace APICatalogo.Controllers
         {
             _context = context;
         }
-
+        // /api/produtos/primeiro
         [HttpGet("Primeiro")]
+        [HttpGet("/primeiro")]
+        [HttpGet("teste")]
         public ActionResult<Produto>GetPrimeiro()
         {
 
@@ -27,7 +30,7 @@ namespace APICatalogo.Controllers
             }
             return Ok(produtos);
         }
-
+        // /api/produtos/
         [HttpGet]
         public ActionResult<IEnumerable<Produto>> Get()
         {
@@ -38,10 +41,11 @@ namespace APICatalogo.Controllers
             }
             return Ok(produtos);
         }
-
-        [HttpGet("{id:int}", Name = "ObterProduto")]
-        public ActionResult<Produto> Get(int id)
+        // /api/produtos/id
+        [HttpGet("{id:int}/{nome = caderno}", Name = "ObterProduto")]
+        public ActionResult<Produto> Get(int id, string nome)
         {
+            var parametro = nome;
             var produto = _context.Produtos.AsNoTracking().FirstOrDefault(p => p.ProdutoId == id);
             if (produto is null)
             {
@@ -49,7 +53,7 @@ namespace APICatalogo.Controllers
             }
             return produto;
         }
-
+        // /api/produtos/
         [HttpPost]
         public ActionResult Post(Produto produto)
         {
@@ -64,6 +68,7 @@ namespace APICatalogo.Controllers
             return new CreatedAtRouteResult("ObterProduto",
                 new { id = produto.ProdutoId }, produto);
         }
+
         [HttpPut("{id:int}")]
         public ActionResult Put(int id, Produto produto)
         {
