@@ -1,9 +1,7 @@
 ﻿using APICatalogo.Context;
 using APICatalogo.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace APICatalogo.Controllers
 {
@@ -16,24 +14,25 @@ namespace APICatalogo.Controllers
         {
             _context = context;
         }
-        // /api/produtos/primeiro
-        //[HttpGet("Primeiro")]
-        //[HttpGet("/primeiro")]
-        [HttpGet("{valor:aplha:length(5)}")]
-        public ActionResult<Produto> Get2(string valor)
-        {
-            var teste = valor;
-            return _context.Produtos.AsNoTracking().FirstOrDefault();
-        }
-        public ActionResult<Produto> GetPrimeiro()
-        {
 
-            var produtos = _context.Produtos.AsNoTracking().FirstOrDefault();
-            if (produtos is null)
+        // /api/produtos/
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Produto>>> Get2()
+        {
+            return await _context.Produtos.AsNoTracking().ToListAsync();
+        }
+
+        // api/produtos/1
+        public async Task<ActionResult<Produto>> Get(int id)
+        {
+            var produtos = await _context.Produtos.AsNoTracking()
+                .FirstOrDefaultAsync(p => p.ProdutoId == id);
+
+            if (produtos == null)
             {
                 return NotFound();
             }
-            return Ok(produtos);
+            return produtos;
         }
         // /api/produtos/
         [HttpGet]
@@ -122,29 +121,5 @@ namespace APICatalogo.Controllers
             }
             return produto;
         }
-        //[HttpGet("tipos-retorno")]
-        //public ActionResult TiposRetorno() //ActionResult
-        //{
-        //    return Ok(new
-        //    {
-        //        Retorno = "Tipos de retorno",
-        //        Tipo1 = "IActionResult",
-        //        Tipo2 = "ActionResult",
-        //        Tipo3 = "ActionResult<T>"
-        //    });
-        //}
-        //public ActionResult<Produto> GetProduto() //ActionResult<T>
-        //{
-        //    var produto = _context.Produtos.AsNoTracking().FirstOrDefault();
-        //    if (produto is null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return produto;
-        //}
-        //IActionResult
-
-
-
     }
 }
