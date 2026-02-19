@@ -1,5 +1,6 @@
 ﻿using APICatalogo.Context;
 using APICatalogo.Models;
+using APICatalogo.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,9 +11,23 @@ namespace APICatalogo.Controllers;
 public class CategoriasController : ControllerBase
 {
     private readonly AppDbContext _context;
-    public CategoriasController(AppDbContext context)
+    public CategoriasController(AppDbContext context, IMeuServico meuServico)
     {
         _context = context;
+    }
+
+    [HttpGet("UsandoFromServices/{nome}")]
+    public ActionResult<string> GetSaudacaoFromServices([FromServices] IMeuServico meuServico,
+                                                         string nome)
+    {
+        return meuServico.Saudacao(nome);
+    }
+
+    [HttpGet("SemUsarFromServices/{nome}")]
+    public ActionResult<string> GetSaudacaoSemFromServices(IMeuServico meuServico,
+                                                            string nome)
+    {
+        return meuServico.Saudacao(nome);
     }
 
     [HttpGet("produtos")]
@@ -41,6 +56,7 @@ public class CategoriasController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError,
                 "Ocorreu um problema ao tratar a sua solicitação.");
         }
+
     }
 
     [HttpGet("{id:int}", Name = "ObterCategoria")]
@@ -52,14 +68,14 @@ public class CategoriasController : ControllerBase
 
             if (categoria == null)
             {
-                return NotFound($"Categoria com ID = {id} não encontrada...");
+                return NotFound($"Categoria com id= {id} não encontrada...");
             }
             return Ok(categoria);
         }
         catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
-                "Ocorreu um problema ao tratar a sua solicitação.");
+                       "Ocorreu um problema ao tratar a sua solicitação.");
         }
     }
 
@@ -76,11 +92,12 @@ public class CategoriasController : ControllerBase
 
             return new CreatedAtRouteResult("ObterCategoria",
                 new { id = categoria.CategoriaId }, categoria);
+
         }
         catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
-                "Ocorreu um problema ao tratar a sua solicitação.");
+                      "Ocorreu um problema ao tratar a sua solicitação.");
         }
     }
 
@@ -100,7 +117,7 @@ public class CategoriasController : ControllerBase
         catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
-                "Ocorreu um problema ao tratar a sua solicitação.");
+                   "Ocorreu um problema ao tratar a sua solicitação.");
         }
     }
 
@@ -113,7 +130,7 @@ public class CategoriasController : ControllerBase
 
             if (categoria == null)
             {
-                return NotFound($"Categoria com ID = {id} não encontrada...");
+                return NotFound($"Categoria com id={id} não encontrada...");
             }
             _context.Categorias.Remove(categoria);
             _context.SaveChanges();
@@ -122,7 +139,7 @@ public class CategoriasController : ControllerBase
         catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
-                "Ocorreu um problema ao tratar a sua solicitação.");
+                           "Ocorreu um problema ao tratar a sua solicitação.");
         }
     }
 }

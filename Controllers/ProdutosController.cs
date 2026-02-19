@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace APICatalogo.Controllers;
 
-[Route("[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class ProdutosController : ControllerBase
 {
@@ -15,7 +15,7 @@ public class ProdutosController : ControllerBase
         _context = context;
     }
 
-    //produtos 
+    //api/produtos 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Produto>>> Get()
     {
@@ -27,11 +27,11 @@ public class ProdutosController : ControllerBase
         return produtos;
     }
 
-    //produtos/id
+    //api/produtos/id
     [HttpGet("{id}", Name = "ObterProduto")]
-    public async Task<ActionResult<Produto>> Get(int id)
+    public async Task<ActionResult<Produto>> Get([FromQuery]int id)
     {
-        var produto = await _context.Produtos.FirstOrDefaultAsync(p => p.ProdutoId == id);
+        var produto = await _context.Produtos.AsNoTracking().FirstOrDefaultAsync(p => p.ProdutoId == id);
         if (produto is null)
         {
             return NotFound("Produto não encontrado...");
@@ -39,9 +39,9 @@ public class ProdutosController : ControllerBase
         return produto;
     }
 
-    //produtos
+    //api/produtos
     [HttpPost]
-    public ActionResult Post(Produto produto)
+    public ActionResult Post([FromBody]Produto produto)
     {
         if (produto is null)
             return BadRequest();
@@ -53,7 +53,7 @@ public class ProdutosController : ControllerBase
             new { id = produto.ProdutoId }, produto);
     }
 
-    // produtos/id
+    //api/produtos/id
     [HttpPut("{id:int}")]
     public ActionResult Put(int id, Produto produto)
     {
@@ -68,7 +68,7 @@ public class ProdutosController : ControllerBase
         return Ok(produto);
     }
 
-    // produtos/id
+    //api/produtos/id
     [HttpDelete("{id:int}")]
     public ActionResult Delete(int id)
     {
