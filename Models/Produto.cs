@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using APICatalogo.Validations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 namespace APICatalogo.Models;
@@ -11,6 +12,7 @@ public class Produto
 
     [Required]
     [StringLength(20, ErrorMessage = "O nome deve ter entre 5 e 20 caracteres", MinimumLength =5)]
+    [PrimeiraLetraMaiuscula]
     public string? Nome { get; set; }
 
     [Required]
