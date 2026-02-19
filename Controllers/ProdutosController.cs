@@ -15,10 +15,11 @@ public class ProdutosController : ControllerBase
         _context = context;
     }
 
+    //produtos 
     [HttpGet]
-    public ActionResult<IEnumerable<Produto>> Get()
+    public async Task<ActionResult<IEnumerable<Produto>>> Get()
     {
-        var produtos = _context.Produtos.ToList();
+        var produtos = await _context.Produtos.ToListAsync();
         if (produtos is null)
         {
             return NotFound();
@@ -26,10 +27,11 @@ public class ProdutosController : ControllerBase
         return produtos;
     }
 
-    [HttpGet("{id:int}", Name = "ObterProduto")]
-    public ActionResult<Produto> Get(int id)
+    //produtos/id
+    [HttpGet("{id}", Name = "ObterProduto")]
+    public async Task<ActionResult<Produto>> Get(int id)
     {
-        var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
+        var produto = await _context.Produtos.FirstOrDefaultAsync(p => p.ProdutoId == id);
         if (produto is null)
         {
             return NotFound("Produto não encontrado...");
@@ -37,6 +39,7 @@ public class ProdutosController : ControllerBase
         return produto;
     }
 
+    //produtos
     [HttpPost]
     public ActionResult Post(Produto produto)
     {
@@ -50,6 +53,7 @@ public class ProdutosController : ControllerBase
             new { id = produto.ProdutoId }, produto);
     }
 
+    // produtos/id
     [HttpPut("{id:int}")]
     public ActionResult Put(int id, Produto produto)
     {
@@ -64,6 +68,7 @@ public class ProdutosController : ControllerBase
         return Ok(produto);
     }
 
+    // produtos/id
     [HttpDelete("{id:int}")]
     public ActionResult Delete(int id)
     {
