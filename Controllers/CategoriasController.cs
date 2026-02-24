@@ -11,9 +11,13 @@ namespace APICatalogo.Controllers;
 public class CategoriasController : ControllerBase
 {
     private readonly AppDbContext _context;
-    public CategoriasController(AppDbContext context)
+    private readonly ILogger<CategoriasController> _logger;
+
+    public CategoriasController(AppDbContext context,
+                                ILogger<CategoriasController> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     [HttpGet("produtos")]
@@ -21,6 +25,7 @@ public class CategoriasController : ControllerBase
     {
         try
         {
+            _logger.LogInformation("============ Get/Categorias/produtos==============");
             return await _context.Categorias.Include(p => p.Produtos).ToListAsync();
         }
         catch (Exception)
@@ -55,12 +60,19 @@ public class CategoriasController : ControllerBase
 
             if (categoria == null)
             {
+                _logger.LogWarning("=======================================");
+                _logger.LogWarning($"Categoria com id= {id} não encontrada...");
+                _logger.LogWarning("=======================================");
                 return NotFound($"Categoria com id= {id} não encontrada...");
             }
             return Ok(categoria);
         }
         catch (Exception)
         {
+            _logger.LogError("=======================================================================");
+            _logger.LogError($"{StatusCodes.Status500InternalServerError} - Ocorreu um problema ao tratar a sua solicitação");
+            _logger.LogError("=======================================================================");
+
             return StatusCode(StatusCodes.Status500InternalServerError,
                        "Ocorreu um problema ao tratar a sua solicitação.");
         }
