@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Metadata.Ecma335;
+using System.Text.Json.Serialization;
 namespace APICatalogo.Models;
 
 [Table("categorias")]
@@ -21,7 +22,7 @@ public class Categoria
     [Required]
     [StringLength(300)]
     public string? ImagemUrl { get; set; }
-
+    [JsonIgnore]
     public ICollection<Produto>? Produtos { get; set; }
 
 }
