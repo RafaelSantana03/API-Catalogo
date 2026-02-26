@@ -36,6 +36,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 builder.Services.AddScoped<ApiLoggingFilter>();
 
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<IProdutoRepository,  ProdutoRepository>();   
 
 builder.Logging.AddProvider(new CustomLoggingProvider(new CustomLoggerProviderConfiguration
 {
