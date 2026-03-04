@@ -1,87 +1,84 @@
-﻿using APICatalogo.Context;
-using APICatalogo.Models;
+﻿using APICatalogo.Models;
+using APICatalogo.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace APICatalogo.Controllers;
 
-[Route("api/[controller]")]
+[Route("[controller]")]
 [ApiController]
 public class ProdutosController : ControllerBase
 {
-    private readonly AppDbContext _context;
-    public ProdutosController(AppDbContext context)
+    private readonly IProdutoRepository _repository;
+    public ProdutosController(IProdutoRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
-    //api/produtos 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Produto>>> Get()
+    public ActionResult<IEnumerable<Produto>> Get()
     {
-        var produtos = await _context.Produtos.ToListAsync();
+        var produtos = _repository.GetProdutos().ToList();
         if (produtos is null)
         {
             return NotFound();
         }
-        return produtos;
+        return Ok(produtos);
     }
 
-    //api/produtos/id
     [HttpGet("{id}", Name = "ObterProduto")]
-    public async Task<ActionResult<Produto>> Get([FromQuery]int id)
+    public ActionResult<Produto> Get(int id)
     {
-        var produto = await _context.Produtos.AsNoTracking().FirstOrDefaultAsync(p => p.ProdutoId == id);
+        var produto = _repository.GetProduto(id);
         if (produto is null)
         {
             return NotFound("Produto não encontrado...");
         }
-        return produto;
+        return Ok(produto);
     }
 
-    //api/produtos
     [HttpPost]
-    public ActionResult Post([FromBody]Produto produto)
+    public ActionResult Post(Produto produto)
     {
         if (produto is null)
             return BadRequest();
 
-        _context.Produtos.Add(produto);
-        _context.SaveChanges();
+        var novoProduto = _repository.Create(produto);
 
         return new CreatedAtRouteResult("ObterProduto",
-            new { id = produto.ProdutoId }, produto);
+            new { id = novoProduto.ProdutoId }, novoProduto);
     }
 
-    //api/produtos/id
     [HttpPut("{id:int}")]
     public ActionResult Put(int id, Produto produto)
     {
         if (id != produto.ProdutoId)
         {
-            return BadRequest();
+            return BadRequest();//400
         }
 
-        _context.Entry(produto).State = EntityState.Modified;
-        _context.SaveChanges();
+        bool atualizado = _repository.Update(produto);
 
-        return Ok(produto);
+        if (atualizado)
+        {
+            return Ok(produto);
+        }
+        else
+        {
+            return StatusCode(500, $"Falha ao atualizar o produto de id = {id}");
+        }
     }
 
-    //api/produtos/id
     [HttpDelete("{id:int}")]
     public ActionResult Delete(int id)
     {
-        var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
-        //var produto = _context.Produtos.Find(id);
-
-        if (produto is null)
+        bool deletado = _repository.Delete(id);
+        if (deletado)
         {
-            return NotFound("Produto não localizado...");
+            return Ok($"Produto de id={id} foi excluído");
         }
-        _context.Produtos.Remove(produto);
-        _context.SaveChanges();
-
-        return Ok(produto);
+        else
+        {
+            return StatusCode(500, $"Falha ao excluir o produto de id={id}");
+        }
     }
 }
