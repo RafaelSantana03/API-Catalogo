@@ -37,6 +37,7 @@ builder.Services.AddScoped<ApiLoggingFilter>();
 
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IProdutoRepository,  ProdutoRepository>();   
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); // AddScpped não permite que você registre um tipo genérico, por isso é necessário usar o typeof para registrar o tipo genérico IRepository<> e Repository<>.
 
 builder.Logging.AddProvider(new CustomLoggingProvider(new CustomLoggerProviderConfiguration
 {
