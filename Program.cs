@@ -1,4 +1,5 @@
 using APICatalogo.Context;
+using APICatalogo.DTOs.Mappings;
 using APICatalogo.Extensions;
 using APICatalogo.Filters;
 using APICatalogo.Logging;
@@ -40,10 +41,13 @@ builder.Services.AddScoped<IProdutoRepository,  ProdutoRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); // AddScpped não permite que você registre um tipo genérico, por isso é necessário usar o typeof para registrar o tipo genérico IRepository<> e Repository<>.
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+
 builder.Logging.AddProvider(new CustomLoggingProvider(new CustomLoggerProviderConfiguration
 {
     LogLevel = LogLevel.Warning,
 }));
+
+builder.Services.AddAutoMapper(typeof(ProdutoDTOMappingProfile));
 
 var app = builder.Build();
 
