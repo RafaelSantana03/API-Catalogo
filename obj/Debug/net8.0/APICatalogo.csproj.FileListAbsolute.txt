@@ -112,3 +112,11 @@ A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\obj\Debug\ne
 A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\obj\Debug\net8.0\APICatalogo.genruntimeconfig.cache
 A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\obj\Debug\net8.0\ref\APICatalogo.dll
 A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\net8.0\AutoMapper.dll
+A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
