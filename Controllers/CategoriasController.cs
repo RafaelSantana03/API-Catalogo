@@ -1,5 +1,7 @@
-﻿using APICatalogo.DTOs;
+﻿using AutoMapper;
+using APICatalogo.DTOs;
 using APICatalogo.DTOs.Mappings;
+using APICatalogo.Pagination;
 using APICatalogo.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,15 +13,28 @@ public class CategoriasController : ControllerBase
 {
     private readonly IUnitOfWork _uof;
     private readonly ILogger<CategoriasController> _logger;
+    private readonly IMapper _mapper;
 
     public CategoriasController(IUnitOfWork uof,
-        ILogger<CategoriasController> logger)
+        ILogger<CategoriasController> logger,
+        IMapper mapper)
     {
 
         _logger = logger;
         _uof = uof;
+        _mapper = mapper;
     }
 
+    [HttpGet("pagination")]
+    public ActionResult<IEnumerable<ProdutoDTO>> Get([FromQuery] ProdutosParameters produtosParams)
+    {
+        var produtos = _uof.ProdutoRepository.GetProdutos(produtosParams);
+
+        var produtosDto = _mapper.Map<List<ProdutoDTO>>(produtos);
+
+        return Ok(produtosDto);
+
+    }
     [HttpGet]
     public ActionResult<IEnumerable<CategoriaDTO>> Get()
     {

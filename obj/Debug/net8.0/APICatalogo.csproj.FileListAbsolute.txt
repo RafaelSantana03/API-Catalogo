@@ -120,3 +120,7 @@ A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\ne
 A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
 A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
+A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\net8.0\Newtonsoft.Json.dll
+A:\Curso Web API Macoratti\net8\cursowebapi\APICatalogo\APICatalogo\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
