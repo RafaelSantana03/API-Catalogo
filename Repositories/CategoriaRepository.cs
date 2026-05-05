@@ -1,12 +1,55 @@
 ﻿using APICatalogo.Context;
 using APICatalogo.Models;
 using Microsoft.EntityFrameworkCore;
+
 namespace APICatalogo.Repositories;
 
-public class CategoriaRepository : Repository<Categoria>, ICategoriaRepository
+public class CategoriaRepository : ICategoriaRepository
 {
-    public CategoriaRepository(AppDbContext context) : base(context)
+    private readonly AppDbContext _context;
+    public CategoriaRepository(AppDbContext context) // Injeção de dependência do contexto para acessar o banco de dados
     {
+        _context = context;
     }
+    public IEnumerable<Categoria> GetCategorias()
+    {
+        return _context.Categorias.AsNoTracking().ToList(); // Usando AsNoTracking para melhorar a performance em consultas somente leitura
+    }
+    public Categoria GetCategoria(int id)
+    {
+        return _context.Categorias.AsNoTracking().FirstOrDefault(c => c.CategoriaId == id); 
+    }
+    public Categoria Create(Categoria categoria)
+    {
+       if(categoria is null)
+            throw new ArgumentNullException(nameof(categoria));
+
+        _context.Categorias.Add(categoria);
+        _context.SaveChanges();
+
+        return categoria;
+    }
+    public Categoria Update(Categoria categoria)
+    {
+        if(categoria is null)
+            throw new ArgumentNullException(nameof(categoria));
+
+        _context.Entry(categoria).State = EntityState.Modified; // Marca o estado da entidade como modificada
+        _context.SaveChanges();
+
+        return categoria;
+    }
+    public Categoria Delete(int id)
+    {
+        var categoria = _context.Categorias.Find(id);// Usando Find para buscar a entidade pelo ID, o que é mais eficiente do que FirstOrDefault nesse caso
+
+        if (categoria is null)
+            throw new ArgumentNullException(nameof(categoria));
+
+        _context.Categorias.Remove(categoria);
+        _context.SaveChanges();
+        return categoria;
+    }
+
 
 }
