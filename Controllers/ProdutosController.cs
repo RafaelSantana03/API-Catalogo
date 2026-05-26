@@ -143,7 +143,7 @@ public class ProdutosController : ControllerBase
         var produto = _uof.ProdutoRepository.Get(p => p.ProdutoId == id);
         if (produto is null)
         {
-            return NotFound("Produto não encontrado...");
+            return NotFound("Produto não encontrado..."); // 404
         }
 
         var produtoDeletado = _uof.ProdutoRepository.Delete(produto);

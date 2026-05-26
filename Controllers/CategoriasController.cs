@@ -11,7 +11,7 @@ namespace APICatalogo.Controllers;
 [ApiController]
 public class CategoriasController : ControllerBase
 {
-    private readonly IUnitOfWork _uof;
+    private readonly IUnitOfWork _uof; 
     private readonly ILogger<CategoriasController> _logger;
     private readonly IMapper _mapper;
 
@@ -76,7 +76,7 @@ public class CategoriasController : ControllerBase
         var categoria = categoriaDto.ToCategoria();
 
         var categoriaCriada = _uof.CategoriaRepository.Create(categoria);
-        _uof.Commit();
+        _uof.Commit(); // salva as alterações no banco de dados
 
         var novaCategoriaDto = categoriaCriada.ToCategoriaDTO();
 
@@ -97,7 +97,7 @@ public class CategoriasController : ControllerBase
         var categoria = categoriaDto.ToCategoria();
 
         var categoriaAtualizada = _uof.CategoriaRepository.Update(categoria);
-        _uof.Commit();
+        _uof.Commit(); // salva as alterações no banco de dados
 
         var categoriaAtualizadaDto = categoriaAtualizada.ToCategoriaDTO();
 
@@ -116,7 +116,7 @@ public class CategoriasController : ControllerBase
         }
 
         var categoriaExcluida = _uof.CategoriaRepository.Delete(categoria);
-        _uof.Commit();
+        _uof.Commit(); // salva as alterações no banco de dados
 
         var categoriaExcluidaDto = categoriaExcluida.ToCategoriaDTO();
 
